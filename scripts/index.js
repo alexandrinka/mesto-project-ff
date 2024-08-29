@@ -1,12 +1,3 @@
-const dataCards = [
-  { name: "Карачевск", link: "./images/card_1.jpg" },
-  { name: "Гора Эльбрус", link: "./images/card_2.jpg" },
-  { name: "Домбай", link: "./images/card_3.jpg" },
-  { name: "Архыз", link: "./images/card_4.jpg" },
-  { name: "Карачаево-Черкесская республика", link: "./images/card_5.jpg" },
-  { name: "Байкал", link: "./images/card_6.jpg" },
-];
-
 const placesList = document.querySelector(".places__list");
 
 function createCard(cardData, deleteCardCallback) {
@@ -39,4 +30,4 @@ function renderCards(cards) {
   });
 }
 
-renderCards(dataCards);
+renderCards(initialCards);
