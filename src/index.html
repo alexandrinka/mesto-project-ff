@@ -26,13 +26,13 @@
             class="profile__image"
           ></img>
           <div class="profile__info">
-            <h1 class="profile__title">Жак-Ив Кусто</h1>
+            <h1 class="profile__title"></h1>
             <button
               class="profile__edit-button"
               type="button"
               aria-label="Редактирвоать профиль"
             ></button>
-            <p class="profile__description">Исследователь океана</p>
+            <p class="profile__description"></p>
           </div>
           <button
             class="profile__add-button"
@@ -60,16 +60,28 @@
               type="text"
               name="name"
               class="popup__input popup__input_type_name"
+              id="input_type_name"
               placeholder="Имя"
               required
+              minlength="2"
+              maxlength="40"
+              pattern="[a-zA-Zа-яА-ЯёЁ0-9\- ]+"
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             />
+            <span class="popup__error input_type_name-error"></span>
             <input
               type="text"
               name="description"
               class="popup__input popup__input_type_description"
+              id="input_type_description"
               placeholder="Занятие"
               required
+              minlength="2"
+              maxlength="200"
+              pattern="[a-zA-Zа-яА-ЯёЁ0-9\- ]+"
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             />
+            <span class="popup__error input_type_description-error"></span>
             <button type="submit" class="button popup__button">
               Сохранить
             </button>
@@ -89,16 +101,24 @@
               type="text"
               name="place-name"
               class="popup__input popup__input_type_card-name"
+              id="input_type_card-name"
               placeholder="Название"
               required
+              minlength="2"
+              maxlength="30"
+              pattern="[a-zA-Zа-яА-ЯёЁ0-9\- ]+"
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             />
+            <span class="popup__error input_type_card-name-error"></span>
             <input
               type="url"
               name="link"
               class="popup__input popup__input_type_url"
+              id="input_type_url"
               placeholder="Ссылка на картинку"
               required
             />
+            <span class="popup__error input_type_url-error"></span>
             <button type="submit" class="button popup__button">
               Сохранить
             </button>
@@ -128,11 +148,14 @@
         ></button>
         <div class="card__description">
           <h2 class="card__title"></h2>
+          <div class="card__like">
           <button
             type="button"
             class="card__like-button"
             aria-label="Лайкнуть карточку"
           ></button>
+          <p class="card__like_count"></p>
+        </div>
         </div>
       </li>
     </template>
