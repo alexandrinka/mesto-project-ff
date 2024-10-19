@@ -20,11 +20,13 @@
       </header>
       <main class="content">
         <section class="profile page__section">
+          <div class="profile__image-container">
           <img
-            src="<%=require('./images/avatar.jpg')%>"
+            src=""
             alt="Аватар"
             class="profile__image"
           ></img>
+        </div>
           <div class="profile__info">
             <h1 class="profile__title"></h1>
             <button
@@ -134,6 +136,45 @@
           ></button>
           <img src="" alt="" class="popup__image" />
           <p class="popup__caption"></p>
+        </div>
+      </div>
+      <div class="popup popup_type_edit-image-profile">
+        <div class="popup__content">
+          <button
+            type="button"
+            class="popup__close"
+            aria-label="Закрыть модальное окно редактирования картинки профиля"
+          ></button>
+          <h3 class="popup__title">Обновить аватар</h3>
+          <form class="popup__form" name="edit-image-profile">
+            <input
+              type="url"
+              name="link"
+              class="popup__input popup__input_type_url_image"
+              id="popup__input_type_url_image"
+              placeholder="Ссылка на картинку профиля"
+              required
+            />
+            <span class="popup__error popup__input_type_url_image-error"></span>
+            <button type="submit" class="button popup__button">
+              Сохранить
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="popup popup_type_delete_card">
+        <div class="popup__content">
+          <button
+            type="button"
+            class="popup__close"
+            aria-label="Закрыть модальное окно удаления карточки"
+          ></button>
+          <h3 class="popup__title">Вы уверены?</h3>
+          <form class="popup__form" name="delete-card">
+            <button type="submit" class="button popup__button">
+              Да
+            </button>
+          </form>
         </div>
       </div>
     </div>

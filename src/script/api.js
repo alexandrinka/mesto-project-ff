@@ -10,13 +10,50 @@ const handleResponse = (response) => {
   if (response.ok) {
     return response.json();
   }
+  return Promise.reject(`Ошибка: ${res.status}`);
 };
+
+//Работа с карточками
 
 export const getCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
   }).then(handleResponse);
 };
+
+export const addCard = (dataCard) => {
+  return fetch(`${config.baseUrl}/cards`, {
+    method: "POST",
+    headers: config.headers,
+    body: JSON.stringify({
+      name: dataCard.name,
+      link: dataCard.link,
+    }),
+  }).then(handleResponse);
+};
+
+export const deleteCardRequest = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+    method: "DELETE",
+    headers: config.headers,
+  }).then(handleResponse);
+};
+
+export const likeCardRequest = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "PUT",
+    headers: config.headers,
+  }).then(handleResponse);
+};
+
+export const dislikeCardRequest = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "DELETE",
+    headers: config.headers,
+  }).then(handleResponse);
+};
+
+//Работа с данными пользователя
 
 export const getDataUser = () => {
   return fetch(`${config.baseUrl}/users/me`, {
@@ -31,38 +68,29 @@ export const editDataUser = (dataUser) => {
     body: JSON.stringify({
       name: dataUser.name,
       about: dataUser.about,
-    })
+    }),
   }).then(handleResponse);
 };
 
-export const addDataCards = (dataCard) => {
-  return fetch(`${config.baseUrl}/cards`, {
-    method: "POST",
+export const editImageUser = (urlImage) => {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
-      name: dataCard.name,
-      link: dataCard.link,
-    })
+      avatar: urlImage,
+    }),
   }).then(handleResponse);
 };
 
-export const deleteCard = (dataCard) => {
-  return fetch(`${config.baseUrl}/cards/${dataCard._id}`, {
-    method: "DELETE",
-    headers: config.headers,
-  }).then(handleResponse);
-};
-
-export const likeCard = (dataCard) => {
-  fetch(`${config.baseUrl}/cards/likes/${dataCard._id}`, {
-    method: "PUT",
-    headers: config.headers,
-  });
-};
-
-export const dislikeCard = (dataCard) => {
-  fetch(`${config.baseUrl}/cards/likes/${dataCard._id}`, {
-    method: "DELETE",
-    headers: config.headers,
+export const checkImageUrl = (url) => {
+  return fetch(url, { method: "HEAD" }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Неверная ссылка");
+    }
+    const contentType = response.headers.get("Content-Type");
+    if (!contentType || !contentType.startsWith("image/")) {
+      throw new Error("Ссылка не на картинку");
+    }
+    return response;
   });
 };

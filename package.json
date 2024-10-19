@@ -7,7 +7,7 @@
     "build": "webpack --mode production",
     "dev": "webpack serve",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d src"
+    "deploy": "gh-pages -d dist"
   },
   "author": "Vasileva Alexandra",
   "license": "ISC",
