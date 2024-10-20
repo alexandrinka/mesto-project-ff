@@ -57,7 +57,7 @@
             aria-label="Закрыть модальное окно редактирования профиля"
           ></button>
           <h3 class="popup__title">Редактировать профиль</h3>
-          <form class="popup__form" name="edit-profile">
+          <form class="popup__form" name="edit-profile" novalidate>
             <input
               type="text"
               name="name"
@@ -67,7 +67,7 @@
               required
               minlength="2"
               maxlength="40"
-              pattern="[a-zA-Zа-яА-ЯёЁ0-9\- ]+"
+              pattern="[a-zA-Zа-яА-ЯёЁ\- ]+"
               data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             />
             <span class="popup__error input_type_name-error"></span>
@@ -80,7 +80,7 @@
               required
               minlength="2"
               maxlength="200"
-              pattern="[a-zA-Zа-яА-ЯёЁ0-9\- ]+"
+              pattern="[a-zA-Zа-яА-ЯёЁ\- ]+"
               data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             />
             <span class="popup__error input_type_description-error"></span>
@@ -98,7 +98,7 @@
             aria-label="Закрыть модальное окно добавления карточки"
           ></button>
           <h3 class="popup__title">Новое место</h3>
-          <form class="popup__form" name="new-place">
+          <form class="popup__form" name="new-place" novalidate>
             <input
               type="text"
               name="place-name"
@@ -108,7 +108,7 @@
               required
               minlength="2"
               maxlength="30"
-              pattern="[a-zA-Zа-яА-ЯёЁ0-9\- ]+"
+              pattern="[a-zA-Zа-яА-ЯёЁ\- ]+"
               data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             />
             <span class="popup__error input_type_card-name-error"></span>
@@ -146,7 +146,7 @@
             aria-label="Закрыть модальное окно редактирования картинки профиля"
           ></button>
           <h3 class="popup__title">Обновить аватар</h3>
-          <form class="popup__form" name="edit-image-profile">
+          <form class="popup__form" name="edit-image-profile" novalidate>
             <input
               type="url"
               name="link"
@@ -170,7 +170,7 @@
             aria-label="Закрыть модальное окно удаления карточки"
           ></button>
           <h3 class="popup__title">Вы уверены?</h3>
-          <form class="popup__form" name="delete-card">
+          <form class="popup__form" name="delete-card" novalidate>
             <button type="submit" class="button popup__button">
               Да
             </button>

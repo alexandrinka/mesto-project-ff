@@ -58,13 +58,18 @@ const editImageProfileForm =
 const deleteCardForm = popupDeleteCard.querySelector(".popup__form");
 //ID пользователя
 let userId;
+//Переменные для удаления карточки
+let currentCardId = null;
+let currentCardElement = null;
 
 //Получение данных карточки и пользователя
-Promise.all([getCards(), getDataUser()]).then(([cardData, userData]) => {
-  userId = userData._id;
-  renderCards(cardData, userId);
-  setUserData(userData);
-});
+Promise.all([getCards(), getDataUser()])
+  .then(([cardData, userData]) => {
+    userId = userData._id;
+    renderCards(cardData, userId);
+    setUserData(userData);
+  })
+  .catch((err) => console.log(err));
 
 //Отрисовка созданных карточек
 function renderCards(dataCards, userId) {
@@ -91,8 +96,9 @@ function setUserData(userData) {
 
 //Фунцкия удаления карточки
 function handleDeleteCard(cardId, cardElement) {
+  currentCardId = cardId;
+  currentCardElement = cardElement;
   openPopup(popupDeleteCard);
-  deleteCardForm.addEventListener("submit", (evt) => handleFormSubmitDeleteCard(evt, cardId, cardElement));
 }
 
 //Постановка лайка
@@ -101,9 +107,7 @@ function handleLikeCard(cardId, cardLikeCount, likeButton) {
     .then((dataCard) => {
       likeCard(likeButton, cardLikeCount, dataCard);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => console.log(err));
 }
 
 //Снятие лайка
@@ -112,25 +116,26 @@ function handleDislikeCard(cardId, cardLikeCount, likeButton) {
     .then((dataCard) => {
       likeCard(likeButton, cardLikeCount, dataCard);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => console.log(err));
 }
 
 //МОДАЛЬНЫЕ ОКНА
 
 // Обработчики для открытия попапов
-buttonAddPlace.addEventListener("click", () => openPopup(popupAddPlace));
+buttonAddPlace.addEventListener("click", () => {
+  openPopup(popupAddPlace);
+  clearValidation(popupAddPlace, validationConfig);
+});
 buttonEditProfile.addEventListener("click", () => {
   openPopup(popupEditProfile);
   inputName.value = profileTitle.textContent;
   inputDescription.value = profileDescription.textContent;
-
   clearValidation(popupEditProfile, validationConfig);
 });
-buttonEditImageProfile.addEventListener("click", () =>
-  openPopup(popupEditProfileImage)
-);
+buttonEditImageProfile.addEventListener("click", () => {
+  openPopup(popupEditProfileImage);
+  clearValidation(popupEditProfileImage, validationConfig);
+});
 function openImagePopup(imageSrc, caption) {
   imageElement.src = imageSrc;
   imageElement.alt = caption;
@@ -168,14 +173,10 @@ function handleFormSubmitEdit(evt) {
   editDataUser(userData)
     .then((dataUser) => {
       setUserData(dataUser);
+      closePopup(popupEditProfile);
     })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      buttonSave.textContent = "Сохранить";
-    });
-  closePopup(popupEditProfile);
+    .catch((err) => console.log(err))
+    .finally(() => (buttonSave.textContent = "Сохранить"));
 }
 
 // Функция добавления карточки
@@ -198,16 +199,11 @@ function handleFormSubmitAdd(evt) {
         openImagePopup,
       });
       placesList.prepend(cardElement);
+      addPlaceForm.reset();
+      closePopup(popupAddPlace);
     })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      buttonSave.textContent = "Сохранить";
-    });
-  addPlaceForm.reset();
-  clearValidation(popupAddPlace, validationConfig);
-  closePopup(popupAddPlace);
+    .catch((err) => console.log(err))
+    .finally(() => (buttonSave.textContent = "Сохранить"));
 }
 
 function handleFormSubmitEditImage(evt) {
@@ -221,36 +217,30 @@ function handleFormSubmitEditImage(evt) {
         .then(() => {
           profileImage.src = urlImage;
           editImageProfileForm.reset();
-          clearValidation(popupEditProfileImage, validationConfig);
           closePopup(popupEditProfileImage);
         })
-        .catch((err) => {
-          console.log(err);
-        })
+        .catch((err) => console.log(err))
         .finally(() => {
           buttonSave.textContent = "Сохранить";
         });
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => console.log(err));
 }
 
-function handleFormSubmitDeleteCard(evt, cardId, cardElement) {
+function handleFormSubmitDeleteCard(evt) {
   evt.preventDefault();
-  deleteCardRequest(cardId)
+  deleteCardRequest(currentCardId)
     .then(() => {
-      deleteCard(cardElement);
+      deleteCard(currentCardElement);
       closePopup(popupDeleteCard);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => console.log(err));
 }
 
 editProfileForm.addEventListener("submit", handleFormSubmitEdit);
 addPlaceForm.addEventListener("submit", handleFormSubmitAdd);
 editImageProfileForm.addEventListener("submit", handleFormSubmitEditImage);
+deleteCardForm.addEventListener("submit", handleFormSubmitDeleteCard);
 
 // Валидация форм
 const validationConfig = {
